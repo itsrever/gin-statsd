@@ -25,19 +25,23 @@ var handlerFunc = func(c *gin.Context) {
 			key = ""
 		}
 
-		path := strings.ReplaceAll(c.FullPath(), "/", "_")
+		path := strings.TrimPrefix(c.FullPath(), "/")
+		path = strings.ReplaceAll(path, "/", "_")
 		path = strings.ReplaceAll(path, "*", "_")
 		path = strings.ReplaceAll(path, ":", "_")
 
+		metricPrefix := fmt.Sprintf("%s.%s", key, path)
+		metricPrefix = strings.TrimPrefix(metricPrefix, ".")
+
 		// send status code
 		status := c.Writer.Status()
-		client.Increment(fmt.Sprintf("%s.%s.status_code.%d", key, path, status))
+		client.Increment(fmt.Sprintf("%s.status_code.%d", metricPrefix, status))
 
 		// send response time
 		duration := time.Since(startTime).Seconds() * 1000 // in milliseconds
-		client.Timing(fmt.Sprintf("%s.%s.response_time", key, path), duration)
+		client.Timing(fmt.Sprintf("%s.response_time", metricPrefix), duration)
 
-		printLog("Metrics sent", infoLevel)
+		printLog(fmt.Sprintf("Metrics sent for %s", metricPrefix), infoLevel)
 	}
 }
 
