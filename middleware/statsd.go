@@ -19,18 +19,14 @@ var handlerFunc = func(c *gin.Context) {
 
 	if client != nil {
 		printLog("Preparing metrics", infoLevel)
-		// get the statsd metric key prefix provided in gin context key
-		key, _ := c.Get(userOptions.getRequestKey())
-		if key == nil {
-			key = ""
-		}
 
+		prefix := userOptions.getPrefix()
 		path := strings.TrimPrefix(c.FullPath(), "/")
 		path = strings.ReplaceAll(path, "/", "_")
 		path = strings.ReplaceAll(path, "*", "_")
 		path = strings.ReplaceAll(path, ":", "_")
 
-		metricPrefix := fmt.Sprintf("%s.%s", key, path)
+		metricPrefix := fmt.Sprintf("%s.%s", prefix, path)
 		metricPrefix = strings.TrimPrefix(metricPrefix, ".")
 
 		// send status code

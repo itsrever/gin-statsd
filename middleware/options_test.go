@@ -22,6 +22,14 @@ func TestDefaultRequestKey(t *testing.T) {
 	}
 }
 
+func TestDefaultPrefix(t *testing.T) {
+	oi := &Options{}
+	reqKey := oi.getPrefix()
+	if reqKey != "" {
+		t.Error("Incorrect prefix generated")
+	}
+}
+
 func TestNonDefaultAddress(t *testing.T) {
 	host := "abcd"
 	port := 123

@@ -10,13 +10,13 @@ A [Gin](https://github.com/gin-gonic/gin) middleware for reporting to statsd dae
 ## Installation
 You can download the middleware using
 ```sh
-go get github.com/amalfra/gin-statsd/v2
+go get github.com/go get github.com/itsrever/gin-statsd/v2/middleware/gin-statsd/v2
 ```
 ## Usage
 Next, import the package
 ``` go
 import (
-  statsdMiddleware "github.com/amalfra/gin-statsd/v2/middleware"
+  statsdMiddleware "github.com/itsrever/gin-statsd/v2/middleware"
 )
 ```
 

@@ -9,6 +9,7 @@ type Options struct {
 	Host       string
 	Port       int
 	RequestKey string
+	Prefix     string
 }
 
 const defaultHost = "127.0.0.1"
@@ -25,6 +26,13 @@ func (o *Options) getAddress() string {
 		port = o.Port
 	}
 	return fmt.Sprintf("%s:%d", host, port)
+}
+
+func (o *Options) getPrefix() string {
+	if o.Prefix != "" {
+		return o.Prefix
+	}
+	return ""
 }
 
 func (o *Options) getRequestKey() string {

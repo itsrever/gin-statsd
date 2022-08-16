@@ -11,7 +11,9 @@ import (
 
 func TestDefaultRecorded(t *testing.T) {
 	r := gin.New()
-	r.Use(New(Options{}))
+	r.Use(New(Options{
+		Prefix: "my-key",
+	}))
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
