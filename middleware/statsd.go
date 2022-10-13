@@ -18,8 +18,6 @@ var handlerFunc = func(c *gin.Context) {
 	c.Next()
 
 	if client != nil {
-		printLog("Preparing metrics", infoLevel)
-
 		prefix := userOptions.getPrefix()
 		path := strings.TrimPrefix(c.FullPath(), "/")
 		path = strings.ReplaceAll(path, "/", "_")
@@ -36,8 +34,6 @@ var handlerFunc = func(c *gin.Context) {
 		// send response time
 		duration := time.Since(startTime).Seconds() * 1000 // in milliseconds
 		client.Timing(fmt.Sprintf("%s.response_time", metricPrefix), duration)
-
-		printLog(fmt.Sprintf("Metrics sent for %s", metricPrefix), infoLevel)
 	}
 }
 
